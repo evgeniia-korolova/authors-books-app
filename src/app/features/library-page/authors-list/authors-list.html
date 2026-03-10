@@ -9,7 +9,7 @@
   
 <div>
   @for (author of libraryStore.authors(); track author.id) {
-  <app-author-row [author]="author" (removeAuthor)="onRemoveAuthor($event)"/>
+  <app-author-row [author]="author" (removeAuthor)="onRemoveAuthor($event)" (editAuthor)="onEditAuthor(author)"/>
   }
   @empty {
     <div class="py-5 text-center text-gray-500 italic text-lg">No authors added yet</div>

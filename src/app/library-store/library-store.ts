@@ -75,5 +75,14 @@ export const LibraryStore = signalStore(
           authors: store.authors().filter((person) => person.id !== author.id),
         });
       },
+
+      updateAuthor: (author: Author) => {
+        patchState(store, {
+          authors: store.authors().map((a) =>
+            a.id === author.id ? author : a
+          ),
+        });
+      },
+      
   }))
 );

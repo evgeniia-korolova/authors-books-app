@@ -10,6 +10,13 @@ import { Author } from '../../../core/models/author.model';
 export class AuthorRow {
   author = input.required<Author>();
   removeAuthor = output<Author>();
+  editAuthor = output<Author>();
+
+  onEdit(author: Author) {    
+    this.editAuthor.emit(author);
+  }
+
+
 
   onRemove(author: Author) {
     this.removeAuthor.emit(author);

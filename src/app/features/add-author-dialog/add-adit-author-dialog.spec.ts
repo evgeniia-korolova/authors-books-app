@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddAuthorDialog } from './add-author-dialog';
+import { AddEditAuthorDialog } from './add-edit-author-dialog';
 
 describe('AddAuthorDialog', () => {
-  let component: AddAuthorDialog;
-  let fixture: ComponentFixture<AddAuthorDialog>;
+  let component: AddEditAuthorDialog;
+  let fixture: ComponentFixture<AddEditAuthorDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddAuthorDialog]
+      imports: [AddEditAuthorDialog]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddAuthorDialog);
+    fixture = TestBed.createComponent(AddEditAuthorDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
