@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { Layout } from './shared/layout/layout';
 import { AuthorsList } from './features/library-page/authors-list/authors-list';
 import { LibraryPage } from './features/library-page/library-page';
 import { Genres } from './features/library-page/genres/genres';

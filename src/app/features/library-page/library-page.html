@@ -1,9 +1,8 @@
 <div class="p-5">
-  <nav class="flex gap-3 mb-5">
+  <nav class="flex gap-3 mb-10">
     <a matButton="filled" routerLink="authors" routerLinkActive="active">Authors </a>
     <a matButton="filled" routerLink="genres" routerLinkActive="active">Genres </a>
   </nav>
-  <button class="add-btn">Add Author</button>
+  <button class="add-btn" (click)="openAddAuthorDialog()">Add Author</button>
 </div>
 <router-outlet></router-outlet>
-

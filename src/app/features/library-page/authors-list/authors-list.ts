@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { MatAnchor, MatButtonModule } from "@angular/material/button";
-import { MockDataService } from '../../../core/services/mock-data-service';
+import { ChangeDetectionStrategy, Component, inject, } from '@angular/core';
 import { AuthorRow } from "../author-row/author-row";
-import { Author } from '../../../core/models/author.model';
+
+import { LibraryStore } from '../../../library-store/library-store';
 
 @Component({
   selector: 'app-authors-list',
@@ -11,10 +10,8 @@ import { Author } from '../../../core/models/author.model';
   styleUrl: './authors-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthorsList {
-  private mockService = inject(MockDataService);
-
-  authors = signal<Author[]>(this.mockService.getAuthors());
+export class AuthorsList { 
+  protected readonly libraryStore = inject(LibraryStore); 
 }
 
 

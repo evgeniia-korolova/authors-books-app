@@ -1,5 +1,4 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component} from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { Layout } from "./shared/layout/layout";
 
@@ -9,6 +8,4 @@ import { Layout } from "./shared/layout/layout";
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  
-}
+export class App {}

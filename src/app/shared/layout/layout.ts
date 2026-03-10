@@ -11,8 +11,8 @@ import { ThemeService } from '../../core/services/theme-service';
   styleUrl: './layout.scss',
 })
 export class Layout {
-  themeService = inject(ThemeService);
-  currentTheme = this.themeService.theme;
+  protected readonly themeService = inject(ThemeService);
+  protected readonly currentTheme = this.themeService.theme;
 
   toggleTheme() {
     const next = this.currentTheme() === 'light' ? 'dark' : 'light';

@@ -8,7 +8,10 @@
   </div>  
   
 <div>
-  @for (author of authors(); track author.id) {
+  @for (author of libraryStore.authors(); track author.id) {
   <app-author-row [author]="author"></app-author-row>
+  }
+  @empty {
+    <div class="py-5 text-center text-gray-500 italic text-lg">No authors added yet</div>
   }
 </div>

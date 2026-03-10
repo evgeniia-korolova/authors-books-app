@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Add Author</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Middle Name</mat-label>
+      <input matInput formControlName="middleName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Birth Date</mat-label>
+      <input matInput type="date" formControlName="birthDate" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+@if (form.hasError('duplicateAuthor')) {
+    <mat-error class="text-center">This author already exists</mat-error>
+}
+
+<mat-dialog-actions align="end">
+  <button matButton (click)="cancel()">Cancel</button>
+  <button matButton="filled" color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>
+
+
