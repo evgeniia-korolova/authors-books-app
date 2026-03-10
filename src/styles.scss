@@ -27,6 +27,25 @@ html {
     ));
   }
 
+  :root {
+    @include mat.sidenav-overrides(
+      (
+        content-background-color: var(--mat-sys-surface-container-low),
+      )
+    );
+  
+    @include mat.toolbar-overrides(
+      (
+        container-background-color: var(--mat-sys-primary-container),
+        container-text-color: var(--mat-sys-on-primary-container),
+      )
+    );
+  
+    @include mat.divider-overrides((
+      color: var(--mat-sys-secondary),    
+    ));
+  }
+
 body {
   // Default the application to a light color theme. This can be changed to
   // `dark` to enable the dark color theme, or to `light dark` to defer to the
