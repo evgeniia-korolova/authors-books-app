@@ -10,6 +10,21 @@ To start a local development server, run:
 ng serve
 ```
 
+## eslint setup
+```bash
+ng add @angular-eslint/schematics
+```
+
+## Tailwind setup
+```bash
+npm install tailwindcss @tailwindcss/postcss postcss —force
+```
+[link](https://tailwindcss.com/docs/installation/framework-guides/angular)
+
+create file and setup .postcssrc.json 
+in app/styles/tailwind.css - @import "tailwindcss";
+in styles.scss - @use './app/styles/tailwind.css';
+
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
 ## Code scaffolding
