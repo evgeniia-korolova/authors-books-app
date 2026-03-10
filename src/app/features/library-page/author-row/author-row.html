@@ -2,6 +2,6 @@
   <div>{{author().firstName}} {{author().lastName}}</div>
   <div>{{author().books.length}}</div>
   <button class="text-blue-600">Edit</button>
-  <button class="text-red-600">Delete</button>
+  <button class="text-red-600" (click)="onRemove(author())">Delete</button>
   <button class="text-green-600">Details</button>
 </div>

@@ -58,9 +58,7 @@ export const LibraryStore = signalStore(
             sameFirst &&
             a.middleName.trim().toLowerCase() === author.middleName.trim().toLowerCase()
           );
-        }
-
-        // если отчества нет хотя бы у одного — сравниваем только фамилию и имя
+        }       
         return sameLast && sameFirst;
       });
 
@@ -71,5 +69,11 @@ export const LibraryStore = signalStore(
         console.log('Duplicate author detected:', author);
       }
     },
+
+    removeAuthor: (author: Author) => {
+        patchState(store, {
+          authors: store.authors().filter((person) => person.id !== author.id),
+        });
+      },
   }))
 );

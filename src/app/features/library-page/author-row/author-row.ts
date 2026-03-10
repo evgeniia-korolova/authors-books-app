@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Author } from '../../../core/models/author.model';
 
 @Component({
@@ -8,5 +8,10 @@ import { Author } from '../../../core/models/author.model';
   styleUrl: './author-row.scss',
 })
 export class AuthorRow {
-  author = input.required<Author>()
+  author = input.required<Author>();
+  removeAuthor = output<Author>();
+
+  onRemove(author: Author) {
+    this.removeAuthor.emit(author);
+  }
 }
