@@ -1,0 +1,14 @@
+<div class="grid grid-cols-[2fr_1fr_minmax(80px,auto)_minmax(80px,auto)_minmax(80px,auto)] gap-2 font-bold border-b pb-2 items-center"
+>
+    <div>Name</div>
+    <div>Book count</div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>  
+  
+<div>
+  @for (author of authors(); track author.id) {
+  <app-author-row [author]="author"></app-author-row>
+  }
+</div>
