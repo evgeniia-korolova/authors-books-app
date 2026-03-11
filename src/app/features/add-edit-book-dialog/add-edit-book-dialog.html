@@ -26,7 +26,7 @@
       <mat-select formControlName="genre">
         @for (genre of libraryStore.genres(); track $index) {
         <mat-option [value]="genre.id">
-          {{ genre.name }}
+          {{ genre.title }}
         </mat-option>
         }
       </mat-select>
@@ -35,7 +35,10 @@
       }
     </mat-form-field>
     <div class="mt-2 text-sm mb-5">
-      <span>Need another genre?</span> <a href="#" class="text-xl font-medium ml-5">Add</a>
+      <span>Need another genre?</span>
+      <button class="text-xl font-medium ml-5 cursor-pointer" (click)="openAddGengeDialog()" aria-haspopup="dialog">
+        Add
+      </button>
     </div>
   </form>
 </mat-dialog-content>
@@ -46,7 +49,7 @@
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="cancel()">Cancel</button>
-  <button matButton="filled" [disabled]="form.invalid" (click)="save()">
+  <button matButton="filled" [disabled]="form.invalid" (click)="saveBook()">
     {{ data.book ? 'Save' : 'Add' }}
   </button>
 </mat-dialog-actions>

@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { LibraryStore } from '../../../library-store/library-store';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-genres',
-  imports: [],
+  imports: [TitleCasePipe],
   templateUrl: './genres.html',
   styleUrl: './genres.scss',
 })

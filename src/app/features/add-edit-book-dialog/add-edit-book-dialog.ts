@@ -1,15 +1,22 @@
 import { Component, inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { Author } from '../../core/models/author.model';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryStore } from '../../library-store/library-store';
-import { uniqueBookValidator, } from './validators/unique-book-validator';
+import { uniqueBookValidator } from './validators/unique-book-validator';
 import { v4 as uuidv4 } from 'uuid';
 import { Book } from '../../core/models/book.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { AddGenreDialog } from '../add-genre-dialog/add-genre-dialog';
+import { Genre } from '../../core/models/genre.model';
 
 @Component({
   selector: 'app-add-edit-book-dialog',
@@ -29,7 +36,7 @@ export class AddEditBookDialog {
   private fb = inject(FormBuilder);
   protected readonly libraryStore = inject(LibraryStore);
   protected data = inject<{ authorId: string; book?: Book }>(MAT_DIALOG_DATA);
-  
+  private dialog = inject(MatDialog);
 
   form = this.fb.nonNullable.group(
     {
@@ -37,22 +44,12 @@ export class AddEditBookDialog {
       pages: this.fb.nonNullable.control(0, {
         validators: [Validators.required, Validators.min(1)],
       }),
-      genre: this.fb.nonNullable.control(''),
+      genre: this.fb.nonNullable.control('', Validators.required),
     },
     { validators: uniqueBookValidator(this.libraryStore, this.data.authorId) }
-);
-
-
-
+  );
 
   constructor() {
-    // this.form = this.fb.nonNullable.group({
-    //   title: this.fb.nonNullable.control('', Validators.required),
-    //   pages: this.fb.nonNullable.control('', Validators.required),
-    //   genre: this.fb.nonNullable.control(''),
-
-    // }, { validators: this.uniqueBookValidator.validate.bind(this.uniqueBookValidator) });
-
     if (this.data.book) {
       this.form.patchValue({
         title: this.data.book.title,
@@ -62,13 +59,12 @@ export class AddEditBookDialog {
     }
   }
 
-  save() {
+  saveBook() {
     if (this.form.valid) {
       const formValue = this.form.getRawValue();
 
       const genre = this.libraryStore.genres().find((g) => g.id === formValue.genre);
       if (!genre) {
-        // можно показать сообщение или просто не сохранять
         return;
       }
 
@@ -78,12 +74,32 @@ export class AddEditBookDialog {
         pages: formValue.pages,
         genre,
       };
-
+      localStorage.removeItem('bookDraft');
       this.dialogRef.close(book);
     }
   }
 
   cancel() {
     this.dialogRef.close();
+  }
+
+  openAddGengeDialog() {
+    localStorage.setItem('bookDraft', JSON.stringify(this.form.getRawValue()));
+
+    const dialogRef = this.dialog.open(AddGenreDialog, {
+      width: '80%',
+      data: { genre: null },
+    });
+
+    dialogRef.afterClosed().subscribe((result: Genre | undefined) => {
+      if (result) {
+        this.libraryStore.addGenre(result);
+      }
+
+      const draft = localStorage.getItem('bookDraft');
+      if (draft) {
+        this.form.patchValue(JSON.parse(draft));
+      }
+    });
   }
 }

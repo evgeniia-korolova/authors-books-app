@@ -1,6 +1,6 @@
 <ul>
     @for (genre of libraryStore.genres(); track genre.id) {
-        <li>{{genre.name}} </li>
+        <li>{{genre.title | titlecase}} </li>
     }
     @empty {
         <li>No genres yet</li>

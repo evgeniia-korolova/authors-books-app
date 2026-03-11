@@ -1,6 +1,4 @@
 export interface Genre {
-    id: string;
-    name: string;
-  }
-  
-  
+  id: string;
+  title: string;
+}

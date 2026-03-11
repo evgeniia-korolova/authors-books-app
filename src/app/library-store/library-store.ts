@@ -32,9 +32,9 @@ export const LibraryStore = signalStore(
   withState({
     authors: [],
     genres: [
-      { id: '1', name: 'Poetry' },
-      { id: '2', name: 'Novel' },
-      { id: '3', name: 'Drama' },
+      { id: '1', title: 'Poetry' },
+      { id: '2', title: 'Novel' },
+      { id: '3', title: 'Drama' },
     ],
 
     selectedAuthorId: undefined,
@@ -132,5 +132,21 @@ export const LibraryStore = signalStore(
         ),
       });
     },
+
+    addGenre: (genre: Genre) => {
+      // const exists = store.genres().some(
+      //   g => g.title.trim().toLowerCase() === genre.title.trim().toLowerCase()
+      // );
+    
+      // if (exists) {
+      //   console.warn('Genre already exists:', genre.title);
+      //   return;
+      // }
+    
+      patchState(store, {
+        genres: [...store.genres(), genre],
+      });
+    },    
+
   }))
 );
