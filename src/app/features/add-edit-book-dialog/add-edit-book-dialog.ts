@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { Author } from '../../core/models/author.model';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryStore } from '../../library-store/library-store';
-import { UniqueBookValidatorService } from './validators/unique-book-validator-service';
+import { uniqueBookValidator, } from './validators/unique-book-validator';
 import { v4 as uuidv4 } from 'uuid';
 import { Book } from '../../core/models/book.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,8 +28,8 @@ export class AddEditBookDialog {
   private dialogRef = inject(MatDialogRef<AddEditBookDialog, Author>);
   private fb = inject(FormBuilder);
   protected readonly libraryStore = inject(LibraryStore);
-  protected data = inject<{ author: Author; book?: Book }>(MAT_DIALOG_DATA);
-  private uniqueBookValidator = inject(UniqueBookValidatorService);
+  protected data = inject<{ authorId: string; book?: Book }>(MAT_DIALOG_DATA);
+  
 
   form = this.fb.nonNullable.group(
     {
@@ -39,11 +39,11 @@ export class AddEditBookDialog {
       }),
       genre: this.fb.nonNullable.control(''),
     },
-    {
-      asyncValidators: [this.uniqueBookValidator.validate.bind(this.uniqueBookValidator)],
-      updateOn: 'blur',
-    }
-  );
+    { validators: uniqueBookValidator(this.libraryStore, this.data.authorId) }
+);
+
+
+
 
   constructor() {
     // this.form = this.fb.nonNullable.group({
@@ -73,7 +73,7 @@ export class AddEditBookDialog {
       }
 
       const book: Book = {
-        id: this.data.author?.id ?? uuidv4(),
+        id: this.data.book?.id ?? uuidv4(),
         title: formValue.title,
         pages: formValue.pages,
         genre,

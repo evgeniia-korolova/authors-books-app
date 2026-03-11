@@ -1,60 +1,52 @@
 <h2 mat-dialog-title>
-    {{ data.book ? 'Adit Book' : 'Add Book' }}
-  </h2>
-  
-  <form [formGroup]="form" mat-dialog-content>
-    <mat-form-field appearance="fill">
+  {{ data.book ? 'Adit Book' : 'Add Book' }}
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" />
       @if (form.controls.title.hasError('required')) {
-          <mat-error>
-            Title reqired
-          </mat-error>
-      }
-      @if (form.hasError('uniqueBook')) {
-          <mat-error>
-            This book already exists
-          </mat-error>
+      <mat-error> Title reqired </mat-error>
       }
     </mat-form-field>
-  
-    <mat-form-field appearance="fill">
+
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>Number of pages</mat-label>
       <input matInput type="number" formControlName="pages" />
       @if (form.controls.pages.hasError('required')) {
-          <mat-error>
-            Add pages number
-          </mat-error>
-      }
-      @if (form.controls.pages.hasError('min')) {
-          <mat-error>
-            One page minimum
-          </mat-error>
+      <mat-error> Add pages number </mat-error>
+      } @if (form.controls.pages.hasError('min')) {
+      <mat-error> One page minimum </mat-error>
       }
     </mat-form-field>
-  
-    <mat-form-field appearance="fill">
+
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>Genre </mat-label>
       <mat-select formControlName="genre">
         @for (genre of libraryStore.genres(); track $index) {
-            <mat-option  [value]="genre.id">
-              {{ genre.name }}
-            </mat-option>
+        <mat-option [value]="genre.id">
+          {{ genre.name }}
+        </mat-option>
         }
       </mat-select>
       @if (form.controls.genre.hasError('required')) {
-          <mat-error>
-            Genre reqired
-          </mat-error>
+      <mat-error> Genre reqired </mat-error>
       }
     </mat-form-field>
+    <div class="mt-2 text-sm mb-5">
+      <span>Need another genre?</span> <a href="#" class="text-xl font-medium ml-5">Add</a>
+    </div>
   </form>
-  
-  <mat-dialog-actions align="end">
-    <button mat-button (click)="cancel()">Cancel</button>
-    <button matButton="filled" [disabled]="form.invalid" (click)="save()">
-      {{ data.book ? 'Save' : 'Add' }}
-    </button>
-  </mat-dialog-actions>
-  
-  
+</mat-dialog-content>
+
+@if (form.hasError('duplicateBook')) {
+<mat-error class="text-center">This book already exists</mat-error>
+}
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button matButton="filled" [disabled]="form.invalid" (click)="save()">
+    {{ data.book ? 'Save' : 'Add' }}
+  </button>
+</mat-dialog-actions>

@@ -1,10 +1,9 @@
 <ul class="mb-5">
-    @for (book of libraryStore.selectedAuthorBooks(); track book.id) {
-        <li>
-            <app-book-item [book]="book"/>
-        </li>
-    }
-    @empty {
-        <li>No books added</li>
-    }
+  @for (book of libraryStore.selectedAuthorBooks(); track book.id) {
+  <li>
+    <app-book-item [book]="book" (edit)="onEditBook($event)" (delete)="onDeleteBook($event)" />
+  </li>
+  } @empty {
+  <li>No books added</li>
+  }
 </ul>

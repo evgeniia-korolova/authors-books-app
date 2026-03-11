@@ -101,30 +101,36 @@ export const LibraryStore = signalStore(
 
     addBookToAuthor: (authorId: string, book: Book) => {
       patchState(store, {
-        authors: store.authors().map(a =>
-          a.id === authorId
-            ? { ...a, books: [...a.books, book] }
-            : a
-        ),
+        authors: store
+          .authors()
+          .map((a) => (a.id === authorId ? { ...a, books: [...a.books, book] } : a)),
       });
     },
-  
+
     updateBook: (authorId: string, updatedBook: Book) => {
       patchState(store, {
-        authors: store.authors().map(a =>
+        authors: store.authors().map((a) =>
           a.id === authorId
             ? {
                 ...a,
-                books: a.books.map(b =>
-                  b.id === updatedBook.id ? updatedBook : b
-                ),
+                books: a.books.map((b) => (b.id === updatedBook.id ? updatedBook : b)),
               }
             : a
         ),
       });
     },
-  
-  
 
+    removeBook: (authorId: string, bookId: string) => {
+      patchState(store, {
+        authors: store.authors().map((a) =>
+          a.id === authorId
+            ? {
+                ...a,
+                books: (a.books ?? []).filter((b) => b.id !== bookId),
+              }
+            : a
+        ),
+      });
+    },
   }))
 );
