@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 import { LibraryStore } from '../../library-store/library-store';
-import { DatePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { BooksList } from './books-list/books-list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,7 +9,7 @@ import { AddEditBookDialog } from '../add-edit-book-dialog/add-edit-book-dialog'
 
 @Component({
   selector: 'app-author-details-page',
-  imports: [DatePipe, BooksList, MatButtonModule],
+  imports: [DatePipe, BooksList, MatButtonModule, TitleCasePipe],
   templateUrl: './author-details-page.html',
   styleUrl: './author-details-page.scss',
 })

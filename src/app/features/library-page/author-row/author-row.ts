@@ -1,10 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { Author } from '../../../core/models/author.model';
 import { RouterLink } from '@angular/router';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-author-row',
-  imports: [RouterLink],
+  imports: [RouterLink, TitleCasePipe],
   templateUrl: './author-row.html',
   styleUrl: './author-row.scss',
 })

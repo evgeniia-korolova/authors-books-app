@@ -1,27 +1,26 @@
 <div role="table" class="w-full">
+  <button class="add-btn" (click)="openAddAuthorDialog()" aria-haspopup="dialog">Add Author</button>
+  <div
+    role="row"
+    class="grid grid-cols-[2fr_1fr_minmax(80px,auto)_minmax(80px,auto)_minmax(80px,auto)] gap-2 font-bold border-b pb-2 items-center"
+  >
+    <div role="columnheader">Name</div>
+    <div role="columnheader">Books count</div>
+    <div role="columnheader"></div>
+    <div role="columnheader"></div>
+    <div role="columnheader"></div>
+  </div>
 
-
-<div role="row"
-  class="grid grid-cols-[2fr_1fr_minmax(80px,auto)_minmax(80px,auto)_minmax(80px,auto)] gap-2 font-bold border-b pb-2 items-center"
->
-  <div role="columnheader">Name</div>
-  <div role="columnheader">Books count</div>
-  <div role="columnheader"></div>
-  <div role="columnheader"></div>
-  <div role="columnheader"></div>
-</div>
-
-<div>
-  @for (author of libraryStore.authors(); track author.id) {
-  <app-author-row
-    [author]="author"
-    (removeAuthor)="onRemoveAuthor($event)"
-    (editAuthor)="onEditAuthor(author)"
-    
-    class="cursor-pointer"
-  />
-  } @empty {
-  <div class="py-5 text-center text-gray-500 italic text-lg">No authors added yet</div>
-  }
-</div>
+  <div>
+    @for (author of libraryStore.authors(); track author.id) {
+    <app-author-row
+      [author]="author"
+      (removeAuthor)="onRemoveAuthor($event)"
+      (editAuthor)="onEditAuthor(author)"
+      class="cursor-pointer"
+    />
+    } @empty {
+    <div class="py-5 text-center text-gray-500 italic text-lg">No authors added yet</div>
+    }
+  </div>
 </div>

@@ -76,8 +76,7 @@ export const LibraryStore = signalStore(
       });
 
       if (!exists) {
-        patchState(store, { authors: [...authors, author] });
-        console.log('Author added:', author);
+        patchState(store, { authors: [...authors, author] });        
       } else {
         console.log('Duplicate author detected:', author);
       }
@@ -134,14 +133,6 @@ export const LibraryStore = signalStore(
     },
 
     addGenre: (genre: Genre) => {
-      // const exists = store.genres().some(
-      //   g => g.title.trim().toLowerCase() === genre.title.trim().toLowerCase()
-      // );
-    
-      // if (exists) {
-      //   console.warn('Genre already exists:', genre.title);
-      //   return;
-      // }
     
       patchState(store, {
         genres: [...store.genres(), genre],

@@ -1,5 +1,5 @@
 <div role="row" class="grid grid-cols-[2fr_1fr_minmax(80px,auto)_minmax(80px,auto)_minmax(80px,auto)] gap-2 border-b py-2 items-center">
-  <div role="cell">{{author().firstName}} {{author().lastName}}</div>
+  <div role="cell">{{author().firstName | titlecase}} {{author().lastName | titlecase}}</div>
   <div role="cell">{{author().books.length}}</div>
   <button class="text-blue-600 cursor-pointer" (click)="onEdit(author())" aria-haspopup="dialog">Edit</button>
   <button class="text-red-600 cursor-pointer" (click)="onRemove(author())">Delete</button>

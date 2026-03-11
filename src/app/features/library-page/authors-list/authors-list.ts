@@ -16,6 +16,19 @@ export class AuthorsList {
   protected readonly libraryStore = inject(LibraryStore);
   private dialog = inject(MatDialog);
 
+  openAddAuthorDialog() {
+    const dialogRef = this.dialog.open(AddEditAuthorDialog, {
+      width: '80%',
+      data: { author: null }
+    });
+
+    dialogRef.afterClosed().subscribe((result: Author | undefined) => {      
+      if (result) {
+        this.libraryStore.addAuthor(result);
+      }
+    });
+  }
+
   onEditAuthor(author: Author) {
     const dialogRef = this.dialog.open(AddEditAuthorDialog, {
       width: '80%',
