@@ -1,15 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject,  } from '@angular/core';
 import { AuthorRow } from '../author-row/author-row';
-
 import { LibraryStore } from '../../../library-store/library-store';
 import { Author } from '../../../core/models/author.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditAuthorDialog } from '../../add-author-dialog/add-edit-author-dialog';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-authors-list',
-  imports: [AuthorRow, RouterLink],
+  imports: [AuthorRow],
   templateUrl: './authors-list.html',
   styleUrl: './authors-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

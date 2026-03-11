@@ -1,9 +1,10 @@
 import { Component, input, output } from '@angular/core';
 import { Author } from '../../../core/models/author.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-author-row',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './author-row.html',
   styleUrl: './author-row.scss',
 })

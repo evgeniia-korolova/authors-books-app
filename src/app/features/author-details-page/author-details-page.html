@@ -15,6 +15,6 @@
   </dl>
   <app-books-list (editBook)="editBook($event)" (deleteBook)="deleteBook($event)"/>
   <div class="flex justify-end">
-      <button matButton="filled" (click)="addBook()">Add a book</button>
+      <button matButton="filled" (click)="addBook()" aria-haspopup="dialog">Add a book</button>
   </div>
 </section>
