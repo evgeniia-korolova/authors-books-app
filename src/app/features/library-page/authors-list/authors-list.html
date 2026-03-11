@@ -1,17 +1,23 @@
-<div class="grid grid-cols-[2fr_1fr_minmax(80px,auto)_minmax(80px,auto)_minmax(80px,auto)] gap-2 font-bold border-b pb-2 items-center"
+<div
+  class="grid grid-cols-[2fr_1fr_minmax(80px,auto)_minmax(80px,auto)_minmax(80px,auto)] gap-2 font-bold border-b pb-2 items-center"
 >
-    <div>Name</div>
-    <div>Book count</div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>  
-  
+  <div>Name</div>
+  <div>Book count</div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
 <div>
   @for (author of libraryStore.authors(); track author.id) {
-  <app-author-row [author]="author" (removeAuthor)="onRemoveAuthor($event)" (editAuthor)="onEditAuthor(author)"/>
-  }
-  @empty {
-    <div class="py-5 text-center text-gray-500 italic text-lg">No authors added yet</div>
+  <app-author-row
+    [author]="author"
+    (removeAuthor)="onRemoveAuthor($event)"
+    (editAuthor)="onEditAuthor(author)"
+    [routerLink]="['/author', author.id]"
+    class="cursor-pointer"
+  />
+  } @empty {
+  <div class="py-5 text-center text-gray-500 italic text-lg">No authors added yet</div>
   }
 </div>

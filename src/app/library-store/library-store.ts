@@ -1,26 +1,27 @@
+import { computed } from '@angular/core';
 import { Author } from '../core/models/author.model';
-import { Book } from '../core/models/book.model';
 import { Genre } from '../core/models/genre.model';
 import { withStorageSync } from '@angular-architects/ngrx-toolkit';
 import {
   patchState,  
+  signalMethod,  
   signalStore,  
+  withComputed,  
   withMethods,
   withState,
 } from '@ngrx/signals';
 
 export interface LibraryState {
   authors: Author[];
-  books: Book[];
   genres: Genre[];
 
-  selectedAuthorId: string | undefined; // выбранный автор (для страницы деталей)
-  selectedBookId: string | undefined; // выбранная книга (для редактирования/деталей)
-  selectedGenreId: string | undefined; // выбранный жанр (для фильтрации)
+  selectedAuthorId: string | undefined;
+  selectedBookId: string | undefined;
+  selectedGenreId: string | undefined;
 
-  loading: boolean; // индикатор загрузки (например, при синхронизации с localStorage)
-  searchTerm: string; // строка поиска по авторам/книгам
-  filterActive: boolean; // включена ли фильтрация
+  loading: boolean;
+  searchTerm: string;
+  filterActive: boolean;
 }
 
 export const LibraryStore = signalStore(
@@ -28,8 +29,7 @@ export const LibraryStore = signalStore(
     providedIn: 'root',
   },
   withState({
-    authors: [],
-    books: [],
+    authors: [],    
     genres: [],
 
     selectedAuthorId: undefined,
@@ -42,8 +42,16 @@ export const LibraryStore = signalStore(
   } as LibraryState),
   withStorageSync({
     key: 'library-store',
-    select: ({ authors, books, genres }) => ({ authors, books, genres }),
+    select: ({ authors, genres }) => ({ authors, genres }),
   }),
+  withComputed(({authors, selectedAuthorId}) => ({
+    selectedAuthor: computed(() => authors().find((person) => person.id === selectedAuthorId())),
+    selectedAuthorBooks: computed(() =>
+      (authors().find((person) => person.id === selectedAuthorId())?.books) ?? []
+    ), 
+  
+  })),
+
   withMethods((store) => ({
     addAuthor: (author: Author) => {
       const authors = store.authors();
@@ -84,5 +92,8 @@ export const LibraryStore = signalStore(
         });
       },
       
+      setAuthorId: signalMethod<string>((authorId: string) => {
+        patchState(store, { selectedAuthorId: authorId });
+      }),
   }))
 );

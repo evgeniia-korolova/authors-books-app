@@ -18,4 +18,8 @@ export const routes: Routes = [
       { path: '', redirectTo: 'authors', pathMatch: 'full' }
     ]
   },
+  {
+    path: 'author/:authorId',
+    loadComponent: () => import('./features/author-details-page/author-details-page')
+  }
 ];

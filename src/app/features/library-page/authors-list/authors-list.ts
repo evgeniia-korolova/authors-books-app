@@ -5,10 +5,11 @@ import { LibraryStore } from '../../../library-store/library-store';
 import { Author } from '../../../core/models/author.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditAuthorDialog } from '../../add-author-dialog/add-edit-author-dialog';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-authors-list',
-  imports: [AuthorRow],
+  imports: [AuthorRow, RouterLink],
   templateUrl: './authors-list.html',
   styleUrl: './authors-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
