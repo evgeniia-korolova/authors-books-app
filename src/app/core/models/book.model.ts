@@ -1,8 +1,10 @@
+import { Genre } from "./genre.model";
+
 export interface Book {
     id: string;
     title: string;
     pages: number;
-    genreId: string;
+    genre: Genre;
   }
   
   

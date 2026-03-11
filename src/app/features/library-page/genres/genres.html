@@ -1,1 +1,8 @@
-<p>genres works!</p>
+<ul>
+    @for (genre of libraryStore.genres(); track genre.id) {
+        <li>{{genre.name}} </li>
+    }
+    @empty {
+        <li>No genres yet</li>
+    }
+</ul>

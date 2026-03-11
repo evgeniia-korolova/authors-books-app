@@ -1,4 +1,4 @@
-import { Component, inject, } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Author } from '../../core/models/author.model';
@@ -23,11 +23,10 @@ import { LibraryStore } from '../../library-store/library-store';
   styleUrl: './add-edit-author-dialog.scss',
 })
 export class AddEditAuthorDialog {
-  private dialogRef = inject(MatDialogRef<AddEditAuthorDialog, Author>); 
+  private dialogRef = inject(MatDialogRef<AddEditAuthorDialog, Author>);
   private fb = inject(FormBuilder);
-  protected readonly libraryStore = inject(LibraryStore); 
+  protected readonly libraryStore = inject(LibraryStore);
   private data = inject<{ author: Author | null }>(MAT_DIALOG_DATA);
-
 
   form = this.fb.nonNullable.group(
     {
@@ -40,14 +39,6 @@ export class AddEditAuthorDialog {
   );
 
   constructor() {
-    this.form = this.fb.nonNullable.group({
-      lastName: this.fb.nonNullable.control('', Validators.required),
-      firstName: this.fb.nonNullable.control('', Validators.required),
-      middleName: this.fb.nonNullable.control(''),
-      birthDate: this.fb.nonNullable.control('', Validators.required),
-    }, { validators: uniqueAuthorValidator(this.libraryStore) });
-
-    // если автор передан → заполняем форму
     if (this.data.author) {
       this.form.patchValue({
         lastName: this.data.author.lastName,
@@ -57,8 +48,6 @@ export class AddEditAuthorDialog {
       });
     }
   }
-
-
 
   save() {
     if (this.form.valid) {

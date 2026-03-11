@@ -1,1 +1,10 @@
-<p>books-list works!</p>
+<ul class="mb-5">
+    @for (book of libraryStore.selectedAuthorBooks(); track book.id) {
+        <li>
+            <app-book-item [book]="book"/>
+        </li>
+    }
+    @empty {
+        <li>No books added</li>
+    }
+</ul>

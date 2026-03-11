@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LibraryStore } from '../../../library-store/library-store';
 
 @Component({
   selector: 'app-genres',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './genres.scss',
 })
 export class Genres {
-
+  protected readonly libraryStore = inject(LibraryStore);
 }

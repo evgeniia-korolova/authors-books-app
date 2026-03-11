@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { Book } from '../../../core/models/book.model';
 
 @Component({
   selector: 'app-book-item',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './book-item.scss',
 })
 export class BookItem {
-
+  readonly book = input<Book>()
 }

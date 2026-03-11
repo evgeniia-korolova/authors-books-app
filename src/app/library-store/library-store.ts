@@ -3,13 +3,14 @@ import { Author } from '../core/models/author.model';
 import { Genre } from '../core/models/genre.model';
 import { withStorageSync } from '@angular-architects/ngrx-toolkit';
 import {
-  patchState,  
-  signalMethod,  
-  signalStore,  
-  withComputed,  
+  patchState,
+  signalMethod,
+  signalStore,
+  withComputed,
   withMethods,
   withState,
 } from '@ngrx/signals';
+import { Book } from '../core/models/book.model';
 
 export interface LibraryState {
   authors: Author[];
@@ -29,8 +30,12 @@ export const LibraryStore = signalStore(
     providedIn: 'root',
   },
   withState({
-    authors: [],    
-    genres: [],
+    authors: [],
+    genres: [
+      { id: '1', name: 'Poetry' },
+      { id: '2', name: 'Novel' },
+      { id: '3', name: 'Drama' },
+    ],
 
     selectedAuthorId: undefined,
     selectedBookId: undefined,
@@ -40,16 +45,16 @@ export const LibraryStore = signalStore(
     searchTerm: '',
     filterActive: false,
   } as LibraryState),
+
   withStorageSync({
     key: 'library-store',
     select: ({ authors, genres }) => ({ authors, genres }),
   }),
-  withComputed(({authors, selectedAuthorId}) => ({
+  withComputed(({ authors, selectedAuthorId }) => ({
     selectedAuthor: computed(() => authors().find((person) => person.id === selectedAuthorId())),
-    selectedAuthorBooks: computed(() =>
-      (authors().find((person) => person.id === selectedAuthorId())?.books) ?? []
-    ), 
-  
+    selectedAuthorBooks: computed(
+      () => authors().find((person) => person.id === selectedAuthorId())?.books ?? []
+    ),
   })),
 
   withMethods((store) => ({
@@ -66,7 +71,7 @@ export const LibraryStore = signalStore(
             sameFirst &&
             a.middleName.trim().toLowerCase() === author.middleName.trim().toLowerCase()
           );
-        }       
+        }
         return sameLast && sameFirst;
       });
 
@@ -79,21 +84,47 @@ export const LibraryStore = signalStore(
     },
 
     removeAuthor: (author: Author) => {
-        patchState(store, {
-          authors: store.authors().filter((person) => person.id !== author.id),
-        });
-      },
+      patchState(store, {
+        authors: store.authors().filter((person) => person.id !== author.id),
+      });
+    },
 
-      updateAuthor: (author: Author) => {
-        patchState(store, {
-          authors: store.authors().map((a) =>
-            a.id === author.id ? author : a
-          ),
-        });
-      },
-      
-      setAuthorId: signalMethod<string>((authorId: string) => {
-        patchState(store, { selectedAuthorId: authorId });
-      }),
+    updateAuthor: (author: Author) => {
+      patchState(store, {
+        authors: store.authors().map((a) => (a.id === author.id ? author : a)),
+      });
+    },
+
+    setAuthorId: signalMethod<string>((authorId: string) => {
+      patchState(store, { selectedAuthorId: authorId });
+    }),
+
+    addBookToAuthor: (authorId: string, book: Book) => {
+      patchState(store, {
+        authors: store.authors().map(a =>
+          a.id === authorId
+            ? { ...a, books: [...a.books, book] }
+            : a
+        ),
+      });
+    },
+  
+    updateBook: (authorId: string, updatedBook: Book) => {
+      patchState(store, {
+        authors: store.authors().map(a =>
+          a.id === authorId
+            ? {
+                ...a,
+                books: a.books.map(b =>
+                  b.id === updatedBook.id ? updatedBook : b
+                ),
+              }
+            : a
+        ),
+      });
+    },
+  
+  
+
   }))
 );

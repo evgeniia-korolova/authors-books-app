@@ -1,7 +1,7 @@
 <section
   class="mx-auto bg-white shadow-md rounded-lg p-4 sm:p-6 lg:p-10 ">
   <h2 class="text-lg sm:text-2xl lg:text-3xl font-semibold mb-4">Author Details</h2>
-  <dl class="grid grid-cols-2 gap-x-4 gap-y-2 w-full">
+  <dl class="grid grid-cols-2 gap-x-4 gap-y-2 w-full mb-5">
     @if (libraryStore.selectedAuthor(); as author) {
     <dt class="text-sm sm:text-xl lg:text-2xl">First Name</dt>
     <dd class="text-sm sm:text-xl lg:text-2xl  font-medium">{{ author.firstName }}</dd>
@@ -13,4 +13,8 @@
     <dd class="text-sm sm:text-xl lg:text-2xl  font-medium">{{ author.birthDate | date : 'longDate' }}</dd>
     }
   </dl>
+  <app-books-list />
+  <div class="flex justify-end">
+      <button matButton="filled" (click)="addBook()">Add a book</button>
+  </div>
 </section>
