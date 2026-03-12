@@ -21,5 +21,9 @@ export const routes: Routes = [
   {
     path: 'author/:authorId',
     loadComponent: () => import('./features/author-details-page/author-details-page')
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./features/not-found/not-found.component')
   }
 ];
