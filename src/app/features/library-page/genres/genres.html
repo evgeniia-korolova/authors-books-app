@@ -1,8 +1,14 @@
-<ul>
-    @for (genre of libraryStore.genres(); track genre.id) {
-        <li>{{genre.title | titlecase}} </li>
-    }
-    @empty {
-        <li>No genres yet</li>
-    }
-</ul>
+<section class="p-5">
+    <button matButton="outlined"  (click)="openAddGenreDialog()" aria-haspopup="dialog" class="text-sm">
+        Add Genre
+      </button>
+      
+    <ul class="mt-5 pl-3">
+        @for (genre of libraryStore.genres(); track genre.id) {
+            <li class="py-2 text-xl">{{genre.title | titlecase}} </li>
+        }
+        @empty {
+            <li>No genres yet</li>
+        }
+    </ul>
+</section>

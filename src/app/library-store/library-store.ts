@@ -15,7 +15,7 @@ import { Book } from '../core/models/book.model';
 export interface LibraryState {
   authors: Author[];
   genres: Genre[];
-
+  sortedGenres: Genre[];
   selectedAuthorId: string | undefined;
   selectedBookId: string | undefined;
   selectedGenreId: string | undefined;
@@ -36,7 +36,7 @@ export const LibraryStore = signalStore(
       { id: '2', title: 'Novel' },
       { id: '3', title: 'Drama' },
     ],
-
+    sortedGenres: [],
     selectedAuthorId: undefined,
     selectedBookId: undefined,
     selectedGenreId: undefined,
@@ -76,7 +76,7 @@ export const LibraryStore = signalStore(
       });
 
       if (!exists) {
-        patchState(store, { authors: [...authors, author] });        
+        patchState(store, { authors: [...authors, author] });
       } else {
         console.log('Duplicate author detected:', author);
       }
@@ -133,11 +133,27 @@ export const LibraryStore = signalStore(
     },
 
     addGenre: (genre: Genre) => {
-    
       patchState(store, {
         genres: [...store.genres(), genre],
       });
-    },    
+    },
 
+    sortGenres: (action: 'asc' | 'desc' | 'none') => {
+      const genres = store.genres();
+
+      if (action === 'asc') {
+        patchState(store, {
+          sortedGenres: [...genres].sort((a, b) => a.title.localeCompare(b.title)),
+        });
+      } else if (action === 'desc') {
+        patchState(store, {
+          sortedGenres: [...genres].sort((a, b) => b.title.localeCompare(a.title)),
+        });
+      } else {
+        patchState(store, {
+          sortedGenres: [...genres], // сброс к исходному порядку
+        });
+      }
+    },
   }))
 );
