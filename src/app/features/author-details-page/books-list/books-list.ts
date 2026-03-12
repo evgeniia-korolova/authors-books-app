@@ -1,4 +1,4 @@
-import { Component, inject, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
 import { LibraryStore } from '../../../library-store/library-store';
 import { BookItem } from '../book-item/book-item';
 import { Book } from '../../../core/models/book.model';
@@ -7,16 +7,15 @@ import { Book } from '../../../core/models/book.model';
   selector: 'app-books-list',
   imports: [BookItem],
   templateUrl: './books-list.html',
-  styleUrl: './books-list.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksList {
   protected readonly libraryStore = inject(LibraryStore);
   readonly editBook = output<Book>();
   readonly deleteBook = output<Book>();
 
-
   onEditBook(book: Book) {
-    this.editBook.emit(book);      
+    this.editBook.emit(book);
   }
 
   onDeleteBook(book: Book) {

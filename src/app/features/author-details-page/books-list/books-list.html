@@ -1,4 +1,4 @@
-<ul class="mb-5">
+<ul class="mb-5 overflow-y-auto">
   @for (book of libraryStore.selectedAuthorBooks(); track book.id) {
   <li>
     <app-book-item [book]="book" (edit)="onEditBook($event)" (delete)="onDeleteBook($event)" />

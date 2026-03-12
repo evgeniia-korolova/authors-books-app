@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { LibraryStore } from '../../library-store/library-store';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { BooksList } from './books-list/books-list';
@@ -12,6 +12,7 @@ import { AddEditBookDialog } from '../add-edit-book-dialog/add-edit-book-dialog'
   imports: [DatePipe, BooksList, MatButtonModule, TitleCasePipe],
   templateUrl: './author-details-page.html',
   styleUrl: './author-details-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class AuthorDetailsPage {
   authorId = input.required<string>();

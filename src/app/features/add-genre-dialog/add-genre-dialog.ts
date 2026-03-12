@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Genre } from '../../core/models/genre.model';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatButtonModule,],
   templateUrl: './add-genre-dialog.html',
-  styleUrl: './add-genre-dialog.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddGenreDialog {
   private dialogRef = inject(MatDialogRef<AddGenreDialog, Genre>);

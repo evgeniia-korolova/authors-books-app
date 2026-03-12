@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { LibraryStore } from '../../../library-store/library-store';
 import { TitleCasePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,7 +13,7 @@ import { SortOrder } from '../../../core/models/sort-order.type';
   selector: 'app-genres',
   imports: [TitleCasePipe, MatButtonModule, MatIconModule],
   templateUrl: './genres.html',
-  styleUrl: './genres.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Genres {
   protected readonly libraryStore = inject(LibraryStore);

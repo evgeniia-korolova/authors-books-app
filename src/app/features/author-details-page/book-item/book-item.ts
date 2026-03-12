@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { Book } from '../../../core/models/book.model';
 import { TitleCasePipe } from '@angular/common';
 
@@ -6,7 +6,7 @@ import { TitleCasePipe } from '@angular/common';
   selector: 'app-book-item',
   imports: [TitleCasePipe],
   templateUrl: './book-item.html',
-  styleUrl: './book-item.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush  
 })
 export class BookItem {
   readonly book = input<Book>();

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Author } from '../../core/models/author.model';
@@ -20,7 +20,7 @@ import { LibraryStore } from '../../library-store/library-store';
     MatButtonModule,
   ],
   templateUrl: './add-edit-author-dialog.html',
-  styleUrl: './add-edit-author-dialog.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddEditAuthorDialog {
   private dialogRef = inject(MatDialogRef<AddEditAuthorDialog, Author>);

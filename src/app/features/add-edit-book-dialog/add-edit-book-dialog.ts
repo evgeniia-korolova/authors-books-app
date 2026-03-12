@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -29,7 +29,7 @@ import { Genre } from '../../core/models/genre.model';
     MatSelectModule,
   ],
   templateUrl: './add-edit-book-dialog.html',
-  styleUrl: './add-edit-book-dialog.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddEditBookDialog {
   private dialogRef = inject(MatDialogRef<AddEditBookDialog, Author>);

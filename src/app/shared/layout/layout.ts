@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Header } from "./header/header";
 import { Footer } from "./footer/footer";
 import { RouterOutlet } from '@angular/router';
@@ -9,6 +9,7 @@ import { ThemeService } from '../../core/services/theme-service';
   imports: [Header, Footer, RouterOutlet],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Layout {
   protected readonly themeService = inject(ThemeService);

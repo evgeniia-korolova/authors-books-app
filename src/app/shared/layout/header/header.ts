@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -7,7 +7,7 @@ import { MatToolbar } from '@angular/material/toolbar';
   selector: 'app-header',
   imports: [MatToolbar, MatIconButton, MatIconModule],
   templateUrl: './header.html',
-  styleUrl: './header.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
   protected readonly title = signal('authors-books-app');

@@ -1,0 +1,14 @@
+footer {
+  background-color: var(--mat-sys-primary-container);
+  color: var(--mat-sys-primary);
+
+  a {
+    color: var(--mat-sys-primary);
+    text-decoration: none;
+    transition: filter 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
+}

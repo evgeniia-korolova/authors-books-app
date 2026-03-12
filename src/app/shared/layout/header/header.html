@@ -1,6 +1,6 @@
 <mat-toolbar class="mat-elevation-z3 relative z-5">
     <h1>{{title()}} </h1>       
-    <button matIconButton  (click)="toggleTheme.emit()" class="ml-auto">
+    <button matIconButton  (click)="toggleTheme.emit()" class="ml-auto primary">
       <mat-icon>
         {{ currentTheme() === 'light' ? 'light_mode' : 'dark_mode' }}
       </mat-icon>
