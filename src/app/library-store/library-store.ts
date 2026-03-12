@@ -11,16 +11,19 @@ import {
   withState,
 } from '@ngrx/signals';
 import { Book } from '../core/models/book.model';
-import { SortAction } from '../core/models/sort-actions.type';
+import { SortOrder } from '../core/models/sort-order.type';
+import { SortBy } from '../core/models/sort-by.type';
 
 export interface LibraryState {
   authors: Author[];
+  sortedAuthors: Author[];
   genres: Genre[];
   sortedGenres: Genre[];
   selectedAuthorId: string | undefined;
   selectedBookId: string | undefined;
   selectedGenreId: string | undefined;
-
+  sortAction: SortOrder;
+  sortCreterion: SortBy;
   loading: boolean;
   searchTerm: string;
   filterActive: boolean;
@@ -32,6 +35,7 @@ export const LibraryStore = signalStore(
   },
   withState({
     authors: [],
+    sortedAuthors: [],
     genres: [
       { id: '1', title: 'Poetry' },
       { id: '2', title: 'Novel' },
@@ -39,6 +43,8 @@ export const LibraryStore = signalStore(
     ],
     sortedGenres: [],
     selectedAuthorId: undefined,
+    sortAction: 'none',
+    sortCreterion: 'none',
     selectedBookId: undefined,
     selectedGenreId: undefined,
 
@@ -51,16 +57,24 @@ export const LibraryStore = signalStore(
     key: 'library-store',
     select: ({ authors, genres }) => ({ authors, genres }),
   }),
-  withComputed(({ authors, selectedAuthorId,genres, sortedGenres }) => ({
-    selectedAuthor: computed(() => authors().find((person) => person.id === selectedAuthorId())),
-    selectedAuthorBooks: computed(
-      () => authors().find((person) => person.id === selectedAuthorId())?.books ?? []
-    ),
-    displayedGenres: computed(() =>
-      sortedGenres().length ? sortedGenres() : genres()
-    ),
-  
-  })),
+  withComputed(
+    ({ authors, selectedAuthorId, genres, sortedGenres, sortedAuthors, searchTerm }) => ({
+      selectedAuthor: computed(() => authors().find((person) => person.id === selectedAuthorId())),
+      selectedAuthorBooks: computed(
+        () => authors().find((person) => person.id === selectedAuthorId())?.books ?? []
+      ),
+      displayedGenres: computed(() => (sortedGenres().length ? sortedGenres() : genres())),
+
+      filteredAuthors: computed(() => {
+        const base = sortedAuthors().length ? sortedAuthors() : authors();
+        const term = searchTerm().toLowerCase();
+
+        return term
+          ? base.filter((a) => `${a.firstName} ${a.lastName}`.toLowerCase().includes(term))
+          : base;
+      }),
+    })
+  ),
 
   withMethods((store) => ({
     addAuthor: (author: Author) => {
@@ -143,7 +157,7 @@ export const LibraryStore = signalStore(
       });
     },
 
-    sortGenres: (action: SortAction) => {
+    sortGenres: (action: SortOrder) => {
       const genres = store.genres();
 
       if (action === 'asc') {
@@ -159,6 +173,35 @@ export const LibraryStore = signalStore(
           sortedGenres: [...genres],
         });
       }
+    },
+
+    sortAuthors: (criterion: SortBy, order: SortOrder) => {
+      const authors = store.authors();
+      const sorted = [...authors];
+
+      if (order !== 'none') {
+        if (criterion === 'name') {
+          sorted.sort((a, b) =>
+            order === 'asc'
+              ? a.lastName.localeCompare(b.lastName)
+              : b.lastName.localeCompare(a.lastName)
+          );
+        } else if (criterion === 'books') {
+          sorted.sort((a, b) =>
+            order === 'asc' ? a.books.length - b.books.length : b.books.length - a.books.length
+          );
+        }
+      }
+
+      patchState(store, {
+        sortedAuthors: sorted,
+        sortCreterion: criterion,
+        sortAction: order,
+      });
+    },
+
+    setSearchTerm: (term: string) => {
+      patchState(store, { searchTerm: term });
     },
   }))
 );

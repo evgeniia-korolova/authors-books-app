@@ -1,6 +1,6 @@
 <section class="p-5">
   <div class="flex justify-between px-5">
-    <button matFab (click)="toggleSort()">
+    <button matFab (click)="toggleSort()" aria-label="sort genres">
       @if (sortOrder() === 'asc') {
       <mat-icon>arrow_upward</mat-icon>
       } @else if (sortOrder() === 'desc') {
@@ -14,6 +14,7 @@
       matButton="outlined"
       (click)="openAddGenreDialog()"
       aria-haspopup="dialog"
+      aria-label="Add new genre"
       class="text-sm"
     >
       Add Genre

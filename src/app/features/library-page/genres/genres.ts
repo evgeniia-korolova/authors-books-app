@@ -5,8 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddGenreDialog } from '../../add-genre-dialog/add-genre-dialog';
 import { Genre } from '../../../core/models/genre.model';
 import { MatButtonModule } from '@angular/material/button';
-import { SortAction } from '../../../core/models/sort-actions.type';
+
 import { MatIconModule } from '@angular/material/icon';
+import { SortOrder } from '../../../core/models/sort-order.type';
 
 @Component({
   selector: 'app-genres',
@@ -17,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class Genres {
   protected readonly libraryStore = inject(LibraryStore);
   private dialog = inject(MatDialog);
-  sortOrder = signal<SortAction>('none');
+  sortOrder = signal<SortOrder>('none');
 
   openAddGenreDialog() {
     const dialogRef = this.dialog.open(AddGenreDialog, {

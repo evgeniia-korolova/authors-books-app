@@ -1,18 +1,52 @@
-<div role="table" class="w-full">
-  <button class="add-btn" (click)="openAddAuthorDialog()" aria-haspopup="dialog">Add Author</button>
+<section role="table" class="w-full">
+  <div>
+    <button class="add-btn" (click)="openAddAuthorDialog()" aria-haspopup="dialog">
+      Add Author
+    </button>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Search author</mat-label>
+    <input matInput (input)="libraryStore.setSearchTerm($event.target.value)" />
+  </mat-form-field>
+
   <div
     role="row"
     class="grid grid-cols-[2fr_1fr_minmax(80px,auto)_minmax(80px,auto)_minmax(80px,auto)] gap-2 font-bold border-b pb-2 items-center"
   >
-    <div role="columnheader">Name</div>
-    <div role="columnheader">Books count</div>
+    <div role="columnheader" class="flex gap-5">
+      Name
+      <button (click)="toggleSort('name')" aria-label="Sort by name">
+        @if (libraryStore.sortCreterion() === 'name' && libraryStore.sortAction() === 'asc') {
+        <mat-icon>arrow_upward</mat-icon>
+        } @else if (libraryStore.sortCreterion() === 'name' && libraryStore.sortAction() === 'desc')
+        {
+        <mat-icon>arrow_downward</mat-icon>
+        } @else {
+        <mat-icon>unfold_more</mat-icon>
+        }
+      </button>
+    </div>
+    <div role="columnheader" class="flex gap-5">
+      Books count
+      <button (click)="toggleSort('books')" aria-label="Sort by books count">
+        @if (libraryStore.sortCreterion() === 'books' && libraryStore.sortAction() === 'asc') {
+        <mat-icon>arrow_upward</mat-icon>
+        } @else if (libraryStore.sortCreterion() === 'books' && libraryStore.sortAction() ===
+        'desc') {
+        <mat-icon>arrow_downward</mat-icon>
+        } @else {
+        <mat-icon>unfold_more</mat-icon>
+        }
+      </button>
+    </div>
     <div role="columnheader"></div>
     <div role="columnheader"></div>
     <div role="columnheader"></div>
   </div>
 
   <div>
-    @for (author of libraryStore.authors(); track author.id) {
+    @for (author of libraryStore.filteredAuthors(); track author.id) {
     <app-author-row
       [author]="author"
       (removeAuthor)="onRemoveAuthor($event)"
@@ -23,4 +57,4 @@
     <div class="py-5 text-center text-gray-500 italic text-lg">No authors added yet</div>
     }
   </div>
-</div>
+</section>
