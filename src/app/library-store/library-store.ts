@@ -11,6 +11,7 @@ import {
   withState,
 } from '@ngrx/signals';
 import { Book } from '../core/models/book.model';
+import { SortAction } from '../core/models/sort-actions.type';
 
 export interface LibraryState {
   authors: Author[];
@@ -50,11 +51,15 @@ export const LibraryStore = signalStore(
     key: 'library-store',
     select: ({ authors, genres }) => ({ authors, genres }),
   }),
-  withComputed(({ authors, selectedAuthorId }) => ({
+  withComputed(({ authors, selectedAuthorId,genres, sortedGenres }) => ({
     selectedAuthor: computed(() => authors().find((person) => person.id === selectedAuthorId())),
     selectedAuthorBooks: computed(
       () => authors().find((person) => person.id === selectedAuthorId())?.books ?? []
     ),
+    displayedGenres: computed(() =>
+      sortedGenres().length ? sortedGenres() : genres()
+    ),
+  
   })),
 
   withMethods((store) => ({
@@ -138,7 +143,7 @@ export const LibraryStore = signalStore(
       });
     },
 
-    sortGenres: (action: 'asc' | 'desc' | 'none') => {
+    sortGenres: (action: SortAction) => {
       const genres = store.genres();
 
       if (action === 'asc') {
@@ -151,7 +156,7 @@ export const LibraryStore = signalStore(
         });
       } else {
         patchState(store, {
-          sortedGenres: [...genres], // сброс к исходному порядку
+          sortedGenres: [...genres],
         });
       }
     },
