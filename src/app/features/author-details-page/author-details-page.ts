@@ -6,10 +6,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { Book } from '../../core/models/book.model';
 import { AddEditBookDialog } from '../add-edit-book-dialog/add-edit-book-dialog';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-author-details-page',
-  imports: [DatePipe, BooksList, MatButtonModule, TitleCasePipe],
+  imports: [DatePipe, BooksList, MatButtonModule, TitleCasePipe, RouterLink],
   templateUrl: './author-details-page.html',
   styleUrl: './author-details-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

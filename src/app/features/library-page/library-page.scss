@@ -1,0 +1,9 @@
+a {
+  background-color: var(--mat-sys-primary-container) !important;
+  color: var(--mat-sys-on-surface) !important;
+}
+
+.active {
+  background-color: var(--mat-sys-inverse-primary) !important;
+  color: var(--mat-sys-on-surface) !important;
+}

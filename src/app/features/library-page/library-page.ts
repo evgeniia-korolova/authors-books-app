@@ -7,6 +7,7 @@ import { LibraryStore } from '../../library-store/library-store';
   selector: 'app-library-page',
   imports: [MatButtonModule, RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './library-page.html',
+  styleUrl: './library-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LibraryPage {  

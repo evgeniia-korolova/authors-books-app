@@ -1,4 +1,8 @@
 <section role="table" class="w-full">
+  <p class="mb-5 text-base md:text-lg lg:text-xl">
+    After adding an author, you can edit their name and birth date by clicking the <span class="font-bold">Edit</span> button. To
+    view details and add books, please use the <span class="font-bold">Details</span> button.
+  </p>
   <div>
     <button class="add-btn" (click)="openAddAuthorDialog()" aria-haspopup="dialog">
       Add Author
@@ -54,7 +58,9 @@
       class="cursor-pointer"
     />
     } @empty {
-    <div class="py-5 text-center text-gray-500 italic text-lg">No authors added yet. Add your first author</div>
+    <div class="py-5 text-center text-gray-500 italic text-lg">
+      No authors added yet. Add your first author
+    </div>
     }
   </div>
 </section>
