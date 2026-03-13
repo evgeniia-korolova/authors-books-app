@@ -1,5 +1,19 @@
-<section class="flex w-full px-1 lg:px-5">
-  <aside class="w-1/4 border-r px-1 md:px-4 lg:px-4 flex flex-col">
+<!-- class="w-1/4 border-r px-1 md:px-4 lg:px-4 flex flex-col"
+    [class.-translate-x-full]="!sidebarService.opened()"
+    [class.translate-x-0]="sidebarService.opened()" -->
+
+<section class="flex w-full px-1 lg:px-5 relative">
+  <aside
+    class="absolute z-10 left-0 top-0 h-full w-full md:w-64 flex flex-col px-1 md:px-4 lg:px-4 transform transition-transform duration-300 ease-in-out sidebar"
+    [class.-translate-x-full]="
+      (responsiveService.smallWidth() || responsiveService.mediumWidth()) &&
+      !sidebarService.opened()
+    "
+    [class.translate-x-0]="
+      (responsiveService.smallWidth() || responsiveService.mediumWidth()) && sidebarService.opened()
+    "
+    [class.translate-x-0]="responsiveService.largeWidth()"
+  >
     <h2 class="text-lg font-bold mb-4">Genres</h2>
     <ul class="overflow-y-auto">
       @for (genre of libraryStore.genres(); track genre.id) {
@@ -40,7 +54,12 @@
         (input)="updateSearchTerm()"
         (keydown.escape)="clearSearch()"
       />
-      <button type="button" class="font-extrabold" aria-label="Clear search" (click)="clearSearch()">
+      <button
+        type="button"
+        class="font-extrabold cursor-pointer"
+        aria-label="Clear search"
+        (click)="clearSearch()"
+      >
         ✕
       </button>
     </div>

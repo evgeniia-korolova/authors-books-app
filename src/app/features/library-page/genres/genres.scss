@@ -16,6 +16,10 @@ article {
   padding-bottom: 1.25rem;
 }
 
+.sidebar {
+  background-color: var(--mat-sys-surface) !important;
+}
+
 .selected {
   text-decoration: underline;
   font-weight: bold; /* можно добавить для наглядности */
