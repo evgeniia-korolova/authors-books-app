@@ -27,7 +27,7 @@ export class Header {
   private router = inject(Router);
 
   protected readonly title = signal('authors-books-app');
-  protected readonly currentTheme = input.required<string>();
+  readonly currentTheme = input.required<string>();
   toggleTheme = output<void>();
   private currentUrl = signal(this.router.url);
 
