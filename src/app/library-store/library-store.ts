@@ -7,26 +7,26 @@ import {
   signalMethod,
   signalStore,
   withComputed,
+  withHooks,
   withMethods,
   withState,
 } from '@ngrx/signals';
 import { Book } from '../core/models/book.model';
 import { SortOrder } from '../core/models/sort-order.type';
 import { SortBy } from '../core/models/sort-by.type';
+import { BookWithAuthor } from '../core/models/book-with-author.type';
 
 export interface LibraryState {
   authors: Author[];
   sortedAuthors: Author[];
   genres: Genre[];
-  sortedGenres: Genre[];
   selectedAuthorId: string | undefined;
-  selectedBookId: string | undefined;
-  selectedGenreId: string | undefined;
+  selectedGenre: string;
   sortAction: SortOrder;
   sortCreterion: SortBy;
-  loading: boolean;
   searchTerm: string;
-  filterActive: boolean;
+  searchBookTerm: string;
+  booksByCategory: BookWithAuthor[];
 }
 
 export const LibraryStore = signalStore(
@@ -37,6 +37,7 @@ export const LibraryStore = signalStore(
     authors: [],
     sortedAuthors: [],
     genres: [
+      { id: '0', title: 'All' },
       { id: '1', title: 'Poetry' },
       { id: '2', title: 'Novel' },
       { id: '3', title: 'Drama' },
@@ -45,12 +46,10 @@ export const LibraryStore = signalStore(
     selectedAuthorId: undefined,
     sortAction: 'none',
     sortCreterion: 'none',
-    selectedBookId: undefined,
-    selectedGenreId: undefined,
-
-    loading: false,
+    selectedGenre: 'All',
     searchTerm: '',
-    filterActive: false,
+    searchBookTerm: '',
+    booksByCategory: [],
   } as LibraryState),
 
   withStorageSync({
@@ -58,12 +57,18 @@ export const LibraryStore = signalStore(
     select: ({ authors, genres }) => ({ authors, genres }),
   }),
   withComputed(
-    ({ authors, selectedAuthorId, genres, sortedGenres, sortedAuthors, searchTerm }) => ({
+    ({
+      authors,
+      selectedAuthorId,      
+      sortedAuthors,
+      searchTerm,
+      booksByCategory,
+      searchBookTerm,
+    }) => ({
       selectedAuthor: computed(() => authors().find((person) => person.id === selectedAuthorId())),
       selectedAuthorBooks: computed(
         () => authors().find((person) => person.id === selectedAuthorId())?.books ?? []
       ),
-      displayedGenres: computed(() => (sortedGenres().length ? sortedGenres() : genres())),
 
       filteredAuthors: computed(() => {
         const base = sortedAuthors().length ? sortedAuthors() : authors();
@@ -73,6 +78,13 @@ export const LibraryStore = signalStore(
           ? base.filter((a) => `${a.firstName} ${a.lastName}`.toLowerCase().includes(term))
           : base;
       }),
+
+      filteredBooks: () => {
+        const base = booksByCategory();
+        const term = searchBookTerm().toLowerCase();
+
+        return term ? base.filter((b) => b.title.toLowerCase().includes(term)) : base;
+      },
     })
   ),
 
@@ -157,24 +169,6 @@ export const LibraryStore = signalStore(
       });
     },
 
-    sortGenres: (action: SortOrder) => {
-      const genres = store.genres();
-
-      if (action === 'asc') {
-        patchState(store, {
-          sortedGenres: [...genres].sort((a, b) => a.title.localeCompare(b.title)),
-        });
-      } else if (action === 'desc') {
-        patchState(store, {
-          sortedGenres: [...genres].sort((a, b) => b.title.localeCompare(a.title)),
-        });
-      } else {
-        patchState(store, {
-          sortedGenres: [...genres],
-        });
-      }
-    },
-
     sortAuthors: (criterion: SortBy, order: SortOrder) => {
       const authors = store.authors();
       const sorted = [...authors];
@@ -203,5 +197,36 @@ export const LibraryStore = signalStore(
     setSearchTerm: (term: string) => {
       patchState(store, { searchTerm: term });
     },
-  }))
+
+    selectGenre: (genre: string) => {
+      patchState(store, { selectedGenre: genre });
+      // const allBooks = store.authors().flatMap((author) => author.books);
+      const allBooks = store.authors().flatMap((author) =>
+        author.books.map((book) => ({
+          ...book,
+          authorName: `${author.firstName} ${author.lastName}`,
+        }))
+      );
+
+      const booksByCategory =
+        genre === 'All' ? allBooks : allBooks.filter((book) => book.genre.title === genre);
+
+      patchState(store, { booksByCategory });
+    },
+
+    setSearchBookTerm: (term: string) => {
+      patchState(store, { searchBookTerm: term });
+    },
+  })),
+  withHooks({
+    onInit(store) {
+      const allBooks: BookWithAuthor[] = store.authors().flatMap((author) =>
+        author.books.map((book) => ({
+          ...book,
+          authorName: `${author.firstName} ${author.lastName}`,
+        }))
+      );      
+      patchState(store, { booksByCategory: allBooks });
+    },
+  })
 );

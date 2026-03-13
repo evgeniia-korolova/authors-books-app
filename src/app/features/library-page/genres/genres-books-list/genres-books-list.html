@@ -1,0 +1,7 @@
+<article>
+    <ul>
+        @for (book of libraryStore.filteredBooks(); track book.id) {
+            <app-genres-book-item [book]="book" />
+        }
+    </ul>
+</article>

@@ -1,3 +1,13 @@
+:host {
+    display: flex;
+    box-sizing: border-box;
+    min-height: calc(100dvh - 130px);
+
+    section {
+        min-height: calc(100dvh - 130px);
+    }
+}
+
 a {
   background-color: var(--mat-sys-primary-container) !important;
   color: var(--mat-sys-on-surface) !important;
@@ -7,3 +17,6 @@ a {
   background-color: var(--mat-sys-inverse-primary) !important;
   color: var(--mat-sys-on-surface) !important;
 }
+
+  
+  
