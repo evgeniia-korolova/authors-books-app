@@ -6,14 +6,16 @@ import { toSignal } from '@angular/core/rxjs-interop';
   providedIn: 'root',
 })
 export class ResponsiveService {
-  private readonly small = '(max-width: 600px)';
-  private readonly medium = '(min-width: 601px) and (max-width: 768px)';
-  private readonly large = '(min-width: 769px)';
-  breakpointObserver = inject(BreakpointObserver);
+  private readonly small = '(max-width: 639px)'; // до sm
+  private readonly medium = '(min-width: 640px) and (max-width: 1023px)'; // sm–lg-1
+  private readonly large = '(min-width: 1024px)'; // lg и выше
 
-  screenWidth$ = this.breakpointObserver.observe([this.small, this.medium, this.large]);
 
-  screenWidth = toSignal(this.screenWidth$);
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
+  private readonly screenWidth$ = this.breakpointObserver.observe([this.small, this.medium, this.large]);
+
+  private readonly screenWidth = toSignal(this.screenWidth$);
 
   smallWidth = computed(() => this.screenWidth()?.breakpoints[this.small]);
   mediumWidth = computed(() => this.screenWidth()?.breakpoints[this.medium]);
