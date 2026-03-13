@@ -1,32 +1,5 @@
-<!-- <mat-sidenav-container class="h-full w-full">
-  <mat-sidenav mode="side" opened class="w-1/4 h-full">    
-    <mat-nav-list class="overflow-y-auto">
-      @for (genre of libraryStore.genres(); track genre.id) {
-      <mat-list-item class="py-2 cursor-pointer hover:underline">
-        {{ genre.title | titlecase }}
-      </mat-list-item>
-      } @empty {
-      <li>No genres yet</li>
-      }
-    </mat-nav-list>
-    <button
-      matButton="filled"
-      (click)="openAddGenreDialog()"
-      aria-haspopup="dialog"
-      aria-label="Add new genre"
-      class="text-base self-end mt-auto"
-    >
-      Add Genre
-    </button>
-  </mat-sidenav>
-
-  <mat-sidenav-content class="p-6">
-    
-  </mat-sidenav-content>
-</mat-sidenav-container> -->
-
-<section class="flex w-full px-5">
-  <aside class="w-1/4 border-r px-4 flex flex-col">
+<section class="flex w-full px-1 lg:px-5">
+  <aside class="w-1/4 border-r px-1 md:px-4 lg:px-4 flex flex-col">
     <h2 class="text-lg font-bold mb-4">Genres</h2>
     <ul class="overflow-y-auto">
       @for (genre of libraryStore.genres(); track genre.id) {
@@ -51,15 +24,25 @@
       (click)="openAddGenreDialog()"
       aria-haspopup="dialog"
       aria-label="Add new genre"
-      class="text-base self-end mt-auto"
+      class="text-base self-start mt-auto"
     >
       Add Genre
     </button>
   </aside>
 
   <article class="w-3/4 flex-1 min-w-0 px-6">
-    <div class="mb-4">
-      <input type="text" placeholder="Search books..." class="border px-3 py-2 w-full" />
+    <div class="mb-4 flex gap-5">
+      <input
+        type="text"
+        placeholder="Search books..."
+        class="w-3/4 border px-3 py-2"
+        [formControl]="searchControl"
+        (input)="updateSearchTerm()"
+        (keydown.escape)="clearSearch()"
+      />
+      <button type="button" class="font-extrabold" aria-label="Clear search" (click)="clearSearch()">
+        ✕
+      </button>
     </div>
 
     <h2 class="text-lg font-bold mb-4">Books</h2>

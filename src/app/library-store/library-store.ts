@@ -200,7 +200,7 @@ export const LibraryStore = signalStore(
 
     selectGenre: (genre: string) => {
       patchState(store, { selectedGenre: genre });
-      // const allBooks = store.authors().flatMap((author) => author.books);
+      
       const allBooks = store.authors().flatMap((author) =>
         author.books.map((book) => ({
           ...book,
